@@ -1,0 +1,77 @@
+import groovy.json.JsonOutput
+
+def COLOR_MAP = [
+    'SUCCESS': 'good',
+    'FAILURE': 'danger',
+]
+
+def getBuildUser() {
+    return currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
+}
+
+def failed
+def total
+
+pipeline {
+
+    agent any
+
+    options {
+        ansiColor('xterm')
+    }
+
+    tools {
+        nodejs 'npm'
+    }
+
+    environment {
+        BUILD_USER = ''
+    }
+
+    parameters {
+        choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Escolha o navegador que deseja utilizar')
+    }
+
+    stages {
+
+        stage ('Clone') {
+            steps {
+
+                git branch: 'master',
+                url: 'git@github.com:Caio-Maia/code-challenge-qa.git'
+            }
+        }
+
+        stage('Build'){
+            steps {
+                echo "Building the application"
+            }
+        }
+
+        stage('Testing') {
+            steps {
+                sh "npm i"
+                sh "npx cypress run --browser ${BROWSER} --config video=false --env allure=true"
+            }
+        }
+
+        stage('Deploy'){
+            steps {
+                echo "Deploying"
+            }
+        }
+    }
+
+
+    post {
+        always {
+            allure includeProperties: false, jdk: 'jdk', results: [[path: 'allure-results']]
+
+            script {
+                BUILD_USER = getBuildUser()
+
+                failed = sh(returnStdout: true, script:'cat "allure-report/widgets/summary.json" | jq -r .statistic.failed')
+                total = sh(returnStdout: true, script:'cat "allure-report/widgets/summary.json" | jq -r .statistic.total')
+            }
+    }
+}
