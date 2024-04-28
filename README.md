@@ -49,33 +49,34 @@ This project was created using these technologies.
 
 ## 🗹 Roadmap
 
-**:hourglass: Increase test coverage
-:heavy_check_mark: Save screenshots of errors
-:hourglass: Integrate Pipeline with Slack to report on running tests
-:hourglass: Integration with Percy to visual regression tests**
+**:hourglass: Increase test coverage </br>
+:heavy_check_mark: Save screenshots of errors </br>
+:hourglass: Integrate Pipeline with Slack to report on running tests </br>
+:hourglass: Integration with Percy to visual regression tests**</br>
 
 ## ▶️ Execution
 
-- **Clone the Project:** Start by cloning the Cypress project repository.
-    ``git clone ``
-</br>
+- **Clone the Project:** Start by cloning the Cypress project repository. </br>
+    ``git clone git@github.com:Caio-Maia/code-challenge-qa.git``</br>
 
 #### :point_up: Note: Create an archive named cypress.env.json in the root folder of the application access:
 (Since this project is just a challenge, I didn't put the file in .gitignore, so you don't need to do this step, this was just done to show the correct pattern of not saving sensitive data in git.)
-```bash
+```json
  {
     "email":"test@test.com",
     "password": "123456"
  }
 ```
-(Note that this is just an example access, if you want the real one you need to talk to one of the QA.)
+(Note that this is just an example access, if you want the real one you need to talk to one of the QA.)</br></br>
 
-- **Install Dependencies:** Navigate to the project directory and install the required dependencies using npm
+- **Install Dependencies:** Navigate to the project directory and install the required dependencies using npm</br>
     ``npm install``
 </br>
-- **Running:** Now you can simply open Cypress Test Runner and select witch test case you want:
+
+- **Running:** Now you can simply open Cypress Test Runner and select witch test case you want:</br>
     ``npm run cy:open``
-- Or you can run the tests using Cypress CLI:
+- Or you can run the tests using Cypress CLI:</br>
     ``npm run cy:run``
 </br>
+
 - **View Test Results:** After the tests are complete, Cypress will display the test results in the terminal/console, including the number of passed, failed, and pending tests
